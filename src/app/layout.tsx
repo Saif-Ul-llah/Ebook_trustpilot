@@ -7,14 +7,19 @@ const inter = Inter({
   display: "swap",
 });
 
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://reviews.nobleinkstudios.com"),
   title: "Noble Ink Studios Reviews",
   description:
     "Read customer reviews, ratings, and service feedback for Noble Ink Studios.",
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    icon: [
+      {
+        url: "/star-icon.svg",
+        type: "image/svg+xml",
+      },
+    ],
   },
   openGraph: {
     title: "Noble Ink Studios Reviews",

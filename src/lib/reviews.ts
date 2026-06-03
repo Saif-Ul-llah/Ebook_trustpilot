@@ -99,7 +99,6 @@ export const ratingDistribution = [
   { label: "4-star", percentage: 28 },
   { label: "3-star", percentage: 0 },
   { label: "2-star", percentage: 0 },
-  { label: "1-star", percentage: 0 },
 ];
 
 export const companyDetails = {

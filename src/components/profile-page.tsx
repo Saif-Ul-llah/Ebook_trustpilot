@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { FormEvent, useState } from "react";
 import {
   Bell,
   Check,
@@ -18,9 +21,15 @@ import {
   TrendingUp,
   UserCheck,
 } from "lucide-react";
-import { companyDetails, ratingDistribution, reviews } from "@/lib/reviews";
+import { companyDetails, ratingDistribution, reviews as initialReviews, type Review } from "@/lib/reviews";
 
 export function ProfilePage() {
+  const [reviews, setReviews] = useState<Review[]>(initialReviews);
+
+  function handleReviewSubmit(review: Review) {
+    setReviews((currentReviews) => [review, ...currentReviews]);
+  }
+
   return (
     <div className="min-h-screen bg-[#f5f5f2] text-[#1f1f1f]">
       <TopHeader />
@@ -30,7 +39,8 @@ export function ProfilePage() {
             <CompanyIntro />
             <IntegrityBanner />
             <ReviewSummary />
-            <ReviewFeed />
+            <WriteReviewForm onSubmitReview={handleReviewSubmit} />
+            <ReviewFeed reviews={reviews} />
           </section>
           <aside className="grid h-fit gap-4 lg:sticky lg:top-6">
             <ScoreCard />
@@ -50,7 +60,7 @@ export function ProfilePage() {
         </div>
         <div className="page-shell pb-16">
           <ReviewTopics />
-          <DetailedReviews />
+          <DetailedReviews reviews={reviews} />
           <CompanyComparison />
           <ExperienceSection />
         </div>
@@ -207,6 +217,130 @@ function ReviewSummary() {
   );
 }
 
+function WriteReviewForm({ onSubmitReview }: { onSubmitReview: (review: Review) => void }) {
+  const [rating, setRating] = useState(5);
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [message, setMessage] = useState("");
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    const name = String(data.get("name") || "").trim();
+    const location = String(data.get("location") || "").trim();
+    const title = String(data.get("title") || "").trim();
+    const body = String(data.get("body") || "").trim();
+
+    if (!name || !location || !title || !body) {
+      setStatus("error");
+      setMessage("Please complete all fields before submitting your review.");
+      return;
+    }
+
+    const dateLabel = new Intl.DateTimeFormat("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    }).format(new Date());
+
+    onSubmitReview({
+      name,
+      location: location.toUpperCase(),
+      count: "1 review",
+      title,
+      body,
+      date: "Just now",
+      experienceDate: dateLabel,
+      rating,
+      verified: true,
+    });
+
+    form.reset();
+    setRating(5);
+    setStatus("success");
+    setMessage("Your review was published on this page.");
+  }
+
+  return (
+    <section id="write-review" className="mt-10 rounded-xl border border-[#dedbd4] bg-white p-5">
+      <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-start">
+        <div>
+          <h2 className="text-[28px] font-bold">Write a review</h2>
+          <p className="mt-1 text-base text-[#555]">Share your experience with Noble Ink Studios.</p>
+        </div>
+        <div className="flex gap-1" aria-label={`${rating} star rating`}>
+          {[1, 2, 3, 4, 5].map((value) => (
+            <button
+              key={value}
+              type="button"
+              onClick={() => setRating(value)}
+              className={`flex size-9 items-center justify-center ${
+                value <= rating ? "bg-[#00b67a]" : "bg-[#d8d8d8]"
+              } text-white`}
+              aria-label={`Rate ${value} star${value === 1 ? "" : "s"}`}
+            >
+              <Star size={20} fill="currentColor" strokeWidth={0} aria-hidden="true" />
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <form onSubmit={handleSubmit} className="mt-5 grid gap-4">
+        <div className="grid gap-4 sm:grid-cols-2">
+          <label className="grid gap-2 text-sm font-bold">
+            Name
+            <input
+              name="name"
+              className="h-11 rounded-md border border-[#d6d0c9] px-3 font-normal outline-none focus:border-[#3557d5]"
+              placeholder="Your name"
+            />
+          </label>
+          <label className="grid gap-2 text-sm font-bold">
+            Country
+            <input
+              name="location"
+              maxLength={2}
+              className="h-11 rounded-md border border-[#d6d0c9] px-3 font-normal uppercase outline-none focus:border-[#3557d5]"
+              placeholder="US"
+            />
+          </label>
+        </div>
+        <label className="grid gap-2 text-sm font-bold">
+          Review title
+          <input
+            name="title"
+            className="h-11 rounded-md border border-[#d6d0c9] px-3 font-normal outline-none focus:border-[#3557d5]"
+            placeholder="Summarize your experience"
+          />
+        </label>
+        <label className="grid gap-2 text-sm font-bold">
+          Review
+          <textarea
+            name="body"
+            rows={5}
+            className="resize-none rounded-md border border-[#d6d0c9] px-3 py-3 font-normal outline-none focus:border-[#3557d5]"
+            placeholder="Tell other authors what happened"
+          />
+        </label>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <button
+            type="submit"
+            className="inline-flex min-h-[48px] items-center justify-center rounded-full bg-[#3557d5] px-7 text-base font-bold text-white"
+          >
+            Publish review
+          </button>
+          {message ? (
+            <p className={status === "success" ? "font-bold text-[#138a42]" : "font-bold text-[#c8352e]"}>
+              {message}
+            </p>
+          ) : null}
+        </div>
+      </form>
+    </section>
+  );
+}
+
 function ScoreCard() {
   return (
     <section className="overflow-hidden rounded-[18px] border border-[#d9d4cc] bg-white shadow-soft">
@@ -227,9 +361,7 @@ function ScoreCard() {
               <span className="text-sm">{item.label}</span>
               <div className="h-3 rounded-full bg-[#d4d4d4]">
                 <div
-                  className={`h-3 rounded-full ${
-                    item.label === "1-star" ? "bg-[#ff4438]" : "bg-[#00b67a]"
-                  }`}
+                  className="h-3 rounded-full bg-[#00b67a]"
                   style={{ width: `${item.percentage || 4}%` }}
                 />
               </div>
@@ -286,7 +418,7 @@ function CompanyDetails() {
   );
 }
 
-function ReviewFeed() {
+function ReviewFeed({ reviews }: { reviews: Review[] }) {
   return (
     <section id="reviews" className="mt-10 grid gap-4">
       <h2 className="text-[28px] font-bold">Reviews for {companyDetails.domain}</h2>
@@ -377,13 +509,12 @@ function ReviewTopics() {
   );
 }
 
-function DetailedReviews() {
+function DetailedReviews({ reviews }: { reviews: Review[] }) {
   const distribution = [
     ["5-star", 85, true, "#00b67a"],
     ["4-star", 4, true, "#73cf11"],
     ["3-star", 2, true, "#ffbf00"],
     ["2-star", 1, true, "#ff8622"],
-    ["1-star", 8, false, "#b9b9b5"],
   ] as const;
 
   return (
