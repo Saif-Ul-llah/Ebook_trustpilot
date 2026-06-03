@@ -193,7 +193,7 @@ function ReviewSummary() {
   return (
     <section className="mt-10 max-w-[880px]">
       <h2 className="flex items-center gap-2 text-[28px] font-bold">
-        <Sparkles size={28} className="text-[#7657d6]" aria-hidden="true" />
+        {/* <Sparkles size={28} className="text-[#7657d6]" aria-hidden="true" /> */}
         Review summary
         <Info size={18} className="text-[#6b6b6b]" aria-hidden="true" />
       </h2>
