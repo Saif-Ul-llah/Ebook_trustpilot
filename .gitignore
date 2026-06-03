@@ -4,8 +4,6 @@ out/
 dist/
 .vercel/
 
-.env
-.env.local
 .env.*.local
 
 npm-debug.log*
@@ -16,3 +14,4 @@ pnpm-debug.log*
 *.tsbuildinfo
 
 .vercel
+config.bat
