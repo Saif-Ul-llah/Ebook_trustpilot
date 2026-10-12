@@ -11,7 +11,7 @@ export function Header() {
             <Image src="/brand/noble_ink_logo_transparent_800x800.png" alt="" fill className="object-contain" />
           </span>
           <span>
-            <span className="block text-xl font-black uppercase leading-none text-navy">Noble Ink</span>
+            <span className="block text-xl font-black uppercase leading-none text-navy">The Book Authors </span>
             <span className="block text-xs font-black uppercase text-crimson">Reviews</span>
           </span>
         </Link>

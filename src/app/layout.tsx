@@ -9,10 +9,10 @@ const inter = Inter({
 
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://reviews.nobleinkstudios.com"),
-  title: "Noble Ink Studios Reviews",
+  metadataBase: new URL("https://reviews.thebooksauthors.com"),
+  title: "The Book Authors Reviews",
   description:
-    "Read customer reviews, ratings, and service feedback for Noble Ink Studios.",
+    "Read customer reviews, ratings, and service feedback for The Book Authors.",
   icons: {
     icon: [
       {
@@ -22,8 +22,8 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "Noble Ink Studios Reviews",
-    description: "Customer service reviews for Noble Ink Studios.",
+    title: "The Book Authors Reviews",
+    description: "Customer service reviews for The Book Authors.",
     images: ["/brand/og-social-1200x630.png"],
   },
 };

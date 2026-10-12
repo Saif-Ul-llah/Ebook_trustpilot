@@ -17,7 +17,7 @@ export const reviews: Review[] = [
     count: "2 reviews",
     title: "The editing process gave my manuscript structure",
     body:
-      "Noble Ink Studios helped me organize a memoir draft that felt impossible to finish. The edits were detailed, patient, and respectful of my voice.",
+      "The Book Authors helped me organize a memoir draft that felt impossible to finish. The edits were detailed, patient, and respectful of my voice.",
     date: "2 days ago",
     experienceDate: "May 22, 2026",
     rating: 5,
@@ -102,15 +102,15 @@ export const ratingDistribution = [
 ];
 
 export const companyDetails = {
-  name: "Noble Ink Studios",
-  domain: "nobleinkstudios.com",
+  name: "The Book Authors",
+  domain: "thebooksauthors.com",
   category: "Book Publisher",
-  score: "4.7",
-  reviewCount: 1247,
+  score: "4.8",
+  reviewCount: 68,
   trustLabel: "Excellent",
   address: "500 W 2nd St Suite 1900, Austin, TX 78701, United States",
   phone: "+1 (281) 317 1005",
-  email: "hello@nobleinkstudios.com",
+  email: "hello@thebooksauthors.com",
   description:
-    "Noble Ink Studios supports authors with ghostwriting, editing, book design, ebook formatting, publishing guidance, and launch planning.",
+    "The Book Authors supports authors with ghostwriting, editing, book design, ebook formatting, publishing guidance, and launch planning.",
 };

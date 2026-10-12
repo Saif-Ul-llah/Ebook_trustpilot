@@ -8,7 +8,7 @@ export function RatingSummary() {
       <p className="mt-1 text-sm font-semibold text-steel">We perform checks on reviews</p>
       <div className="mt-5 flex items-center gap-3">
         <Stars rating={5} />
-        <span className="text-sm font-black text-ink">4.7</span>
+        <span className="text-sm font-black text-ink">4.8</span>
       </div>
       <div className="mt-6 grid gap-3">
         {ratingDistribution.map((item) => (

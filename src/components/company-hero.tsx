@@ -30,7 +30,7 @@ export function CompanyHero() {
             </div>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <a
-                href="https://nobleinkstudios.com"
+                href="https://thebooksauthors.com"
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded bg-navy px-5 text-sm font-black uppercase text-white hover:bg-darkNavy"
               >
                 <Globe2 size={18} aria-hidden="true" />
@@ -57,7 +57,7 @@ export function CompanyHero() {
               </p>
               <p className="flex items-center gap-2">
                 <ExternalLink size={18} className="text-trust" aria-hidden="true" />
-                Links back to official Noble Ink site
+                Links back to official The Book Authors Ink site
               </p>
             </div>
           </aside>
