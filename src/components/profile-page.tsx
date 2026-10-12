@@ -24,11 +24,7 @@ import {
 import { companyDetails, ratingDistribution, reviews as initialReviews, type Review } from "@/lib/reviews";
 
 export function ProfilePage() {
-  const [reviews, setReviews] = useState<Review[]>(initialReviews);
-
-  function handleReviewSubmit(review: Review) {
-    setReviews((currentReviews) => [review, ...currentReviews]);
-  }
+  const [reviews] = useState<Review[]>(initialReviews);
 
   return (
     <div className="min-h-screen bg-[#f5f5f2] text-[#1f1f1f]">
@@ -39,7 +35,7 @@ export function ProfilePage() {
             <CompanyIntro />
             <IntegrityBanner />
             <ReviewSummary />
-            <WriteReviewForm onSubmitReview={handleReviewSubmit} />
+            <WriteReviewForm />
             <ReviewFeed reviews={reviews} />
           </section>
           <aside className="grid h-fit gap-4 lg:sticky lg:top-6">
@@ -89,14 +85,14 @@ function TopHeader() {
         </div>
 
         <nav className="ml-auto hidden shrink-0 items-center gap-5 text-[15px] font-bold lg:flex xl:gap-7">
-          <Link href="#categories">Categories</Link>
-          <Link href="#blog">Blog</Link>
+          <Link href="https://www.trustpilot.com/categories">Categories</Link>
+          <Link href="https://www.trustpilot.com/blog">Blog</Link>
           <Bell size={25} aria-label="Notifications" />
-          <Link href="#login" className="whitespace-nowrap">
+          <Link href="https://www.trustpilot.com/users/connect?redirect=%2f&source_cta=header" className="whitespace-nowrap">
             Log in
           </Link>
           <Link
-            href="https://nobleinkstudios.com"
+            href="https://business.trustpilot.com/"
             className="whitespace-nowrap rounded-full bg-[#7da0f6] px-6 py-3 text-[#101010]"
           >
             For businesses
@@ -121,12 +117,12 @@ function CompanyIntro() {
   return (
     <div className="border-b border-[#d8d8d8] pb-9">
       <div className="grid gap-7 sm:grid-cols-[132px_1fr]">
-        <div className="flex size-[132px] items-center justify-center bg-[#231f20] p-4">
+        <div className="flex size-[132px] items-center justify-center p-4">
           <Image
-            src="/brand/noble_ink_logo_dark.svg"
+            src="/brand/noble_ink_logo_transparent_800x800.png"
             alt={companyDetails.name}
-            width={112}
-            height={112}
+            width={130}
+            height={130}
             className="object-contain"
           />
         </div>
@@ -148,7 +144,7 @@ function CompanyIntro() {
             <span className="font-semibold">{companyDetails.score}</span>
             <Info size={19} className="text-[#375bd2]" aria-hidden="true" />
           </div>
-          <Link href="https://nobleinkstudios.com" className="mt-3 block text-lg text-[#244ed8]">
+          <Link href="https://thebooksauthors.com" className="mt-3 block text-lg text-[#244ed8]">
             {companyDetails.category}
           </Link>
           <div className="mt-5 flex flex-col gap-3 sm:flex-row">
@@ -160,7 +156,7 @@ function CompanyIntro() {
               Write a review
             </a>
             <a
-              href="https://nobleinkstudios.com"
+              href="https://thebooksauthors.com"
               className="inline-flex min-h-[50px] items-center justify-center gap-3 rounded-full border border-[#3557d5] px-7 text-base font-bold text-[#3557d5]"
             >
               Visit website
@@ -199,7 +195,7 @@ function ReviewSummary() {
       </h2>
       <p className="mt-1 text-lg text-[#555]">Created with AI, based on recent reviews</p>
       <p className="mt-4 text-[18px] leading-7">
-        Evaluating recent Noble Ink Studios reviews, authors frequently praise the
+        Evaluating recent The Book Authors reviews, authors frequently praise the
         professional editing process, thoughtful manuscript guidance, and polished
         publishing support. Customers highlight helpful staff, clear communication,
         cover design quality, and practical launch guidance. Some reviewers mention
@@ -217,7 +213,7 @@ function ReviewSummary() {
   );
 }
 
-function WriteReviewForm({ onSubmitReview }: { onSubmitReview: (review: Review) => void }) {
+function WriteReviewForm() {
   const [rating, setRating] = useState(5);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
@@ -238,28 +234,10 @@ function WriteReviewForm({ onSubmitReview }: { onSubmitReview: (review: Review) 
       return;
     }
 
-    const dateLabel = new Intl.DateTimeFormat("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    }).format(new Date());
-
-    onSubmitReview({
-      name,
-      location: location.toUpperCase(),
-      count: "1 review",
-      title,
-      body,
-      date: "Just now",
-      experienceDate: dateLabel,
-      rating,
-      verified: true,
-    });
-
     form.reset();
     setRating(5);
     setStatus("success");
-    setMessage("Your review was published on this page.");
+    setMessage("Your review has been submitted for verification.");
   }
 
   return (
@@ -267,7 +245,7 @@ function WriteReviewForm({ onSubmitReview }: { onSubmitReview: (review: Review) 
       <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-start">
         <div>
           <h2 className="text-[28px] font-bold">Write a review</h2>
-          <p className="mt-1 text-base text-[#555]">Share your experience with Noble Ink Studios.</p>
+          <p className="mt-1 text-base text-[#555]">Share your experience with The Book Authors.</p>
         </div>
         <div className="flex gap-1" aria-label={`${rating} star rating`}>
           {[1, 2, 3, 4, 5].map((value) => (
@@ -665,7 +643,7 @@ function FilterGroup({ title, children }: { title: string; children: React.React
 
 function CompanyComparison() {
   const companies = [
-    ["Noble Ink Studios", "4.7", "Excellent", "Book Publisher"],
+    ["The Book Authors", "4.8", "Excellent", "Book Publisher"],
     ["AuthorHouse Pro", "4.3", "Great", "Publishing Service"],
     ["Editorial Lane", "4.1", "Great", "Editing Service"],
   ];
@@ -693,11 +671,11 @@ function CompanyComparison() {
 function ExperienceSection() {
   return (
     <section className="mt-10 rounded-xl border border-[#dedbd4] bg-white p-6">
-      <h2 className="text-[28px] font-bold">The NobleReviews experience</h2>
+      <h2 className="text-[28px] font-bold">The Reviews experience</h2>
       <div className="mt-6 grid gap-5 md:grid-cols-3">
         {[
           ["Anyone can write a review", "Reviews can be shared by authors who used writing, editing, design, or publishing services."],
-          ["Companies can reply", "Noble Ink Studios can respond to feedback and explain how author concerns are handled."],
+          ["Companies can reply", "The Book Authors can respond to feedback and explain how author concerns are handled."],
           ["Reviews are visible", "Ratings, dates, and reviewer context are shown clearly for people comparing publishing services."],
         ].map(([title, text]) => (
           <article key={title} className="rounded-lg bg-[#f5f5f2] p-5">
